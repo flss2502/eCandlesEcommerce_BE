@@ -1,0 +1,96 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: eScentedCandle
+  profiles:
+    active: '@spring.profiles.active@'
+
+open:
+  api:
+    title: API-service document
+    version: V1.0.0
+    description: description
+    licenseUrl: ??
+    licenseName: API license
+    serversUrl: https://ecandle-backend.azurewebsites.net/
+    serversDescription: Server v1
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+open:
+  api:
+    title: API-service document
+    version: V1.0.0
+    description: description
+    licenseUrl: ??
+    licenseName: API license
+    serversUrl: https://ecandle-backend.azurewebsites.net/
+    serversDescription: Server v1
+
+---
+spring:
+  datasource:
+    url: jdbc:mysql://ecandle.mysql.database.azure.com:3306/ecandle?useSSL=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ecandle
+    password: Admin123123@
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  messages:
+    basename: i18n/messages
+    encoding: UTF-8
+    default-locale: en
+
+  #  data:
+  #    redis:
+  #      host: ${REDIS_HOST:localhost}
+  #      port: ${REDIS_PORT:6379}
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: anhquanpro332002@gmail.com
+    password: sbhh jrde aqqs rfbe
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+api:
+  prefix: api/v1
+
+payos:
+  api:
+    secret: 59a13a59-2685-487d-966c-8a0315c19477
+    key: 2f2ff35f-c481-4dbd-8140-f5af2649867e
+    check_sum: ffe3d79b57d6d0546c330aa86b3fb1d68812f581ae26ba7a23477e2691c5704c
+
+#logging:
+#  level:
+#    org.springframework.web.servlet.handler: TRACE
+
+application:
+  security:
+    jwt:
+      secret-key: "f732d7b5cdea20b0a9a5f3067f245f9f2b24f247684a736a761e623d3de24928"
+      expiration: 86400000
+      refresh-token:
+        expiration: 604800000

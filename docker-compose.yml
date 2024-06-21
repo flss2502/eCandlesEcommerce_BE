@@ -1,0 +1,102 @@
+version: '3.9'
+services:
+  docker-mysql:
+    image: mysql:8.0.13
+    container_name: "docker-mysql"
+    restart: always
+    ports:
+      - "3308:3306"
+    networks:
+      - incandescent_project_backend
+    environment:
+      MYSQL_DATABASE: "eCandle"
+      MYSQL_ROOT_PASSWORD: 12345
+      MYSQL_ROOT_HOST: "%"
+
+#  redis-container:
+#    image: docker.io/redis:7.2.3
+#    container_name: redis-container
+#    restart: always
+#    ports:
+#      - "6379:6379"
+#    volumes:
+#      - ./redis-data:/data
+#    networks:
+#      - incandescent_project_backend
+
+  spring-boot-app:
+    container_name: api-container-1
+    image: api-image-sample
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Chỉ định cổng để truy cập ứng dụng Spring Boot từ bên ngoài container
+    networks:
+      - incandescent_project_backend
+    depends_on:
+      - docker-mysql # Đảm bảo rằng container spring-boot-app sẽ được khởi chạy sau container mysql-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://docker-mysql:3306/eCandle?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 12345
+      REDIS_HOST: localhost
+      REDIS_PORT: 6379
+      KAFKA_BROKER_SERVER: kafka-broker-01
+      KAFKA_BROKER_PORT: 19092
+
+networks:
+  incandescent_project_backend:
+    driver: bridge
+
+#  mysql-db:
+#    image: mysql:8.0.13
+#    ports:
+#      - "3307:3306" # Chuyển tiếp cổng MySQL từ 3306 trong container đến 3307 trên máy host
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 12345
+#      MYSQL_DATABASE: eCandle
+#      MYSQL_USER: root
+#      MYSQL_PASSWORD: 12345
+#
+#volumes:
+#  mysql-data: # Định nghĩa một volume để lưu trữ dữ liệu của MySQL
+
+  #version: '3.9'
+  #
+  #services:
+  #  api-service:
+  #    container_name: api-container-1
+  #    build:
+  #      context: ./
+  #      dockerfile: Dockerfile
+  #    depends_on:
+  #      - mysql-db
+  #    environment:
+  #      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3307/eCandle?useSSL=false&serverTimezone=UTC
+  #      SPRING_DATASOURCE_USERNAME: root
+  #      SPRING_DATASOURCE_PASSWORD: 12345
+  ##    env_file:
+  ##      - .env
+  #    ports:
+  #      - '8081:8081'
+  #    networks:
+  #      - backend
+  #
+  #
+  #  mysql-db:
+  #    image: mysql:latest
+  #    ports:
+  #      - "3307:3306" # Chuyển tiếp cổng MySQL từ 3306 trong container đến 3307 trên máy host
+  #    environment:
+  #      MYSQL_ROOT_PASSWORD: 12345
+  #      MYSQL_DATABASE: eCandle
+  #      MYSQL_USER: root
+  #      MYSQL_PASSWORD: 12345
+  #
+  #networks:
+  #  backend:
+  #    driver: bridge
+
+
+

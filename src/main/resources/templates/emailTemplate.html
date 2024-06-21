@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cập nhật trạng thái đơn hàng [[${order.id}]]</title>
+</head>
+<body>
+<h1>Cập nhật trạng thái đơn hàng [[${order.id}]]</h1>
+
+<p>Kính gửi [[${order.fullName}]],</p>
+
+<p>Cảm ơn bạn đã đặt mua sản phẩm tại [Tên cửa hàng]. Chúng tôi đang rất vui mừng được thông báo cho bạn về trạng thái đơn hàng [[${order.id}]] của bạn.</p>
+
+<h2>Trạng thái hiện tại: [[${order.orderStatus}]]</h2>
+
+<h2>Chi tiết đơn hàng:</h2>
+<ul>
+    <li>Mã đơn hàng: [[${order.id}]]</li>
+    <li>Ngày đặt hàng: [[${order.orderDate}]]</li>
+    <li>Tên khách hàng: [[${order.fullName}]]</li>
+    <li>Địa chỉ giao hàng: [[${order.address}]], [[${order.ward}]], [[${order.district}]], [[${order.province}]]</li>
+    <li>Số điện thoại: [[${order.phoneNumber}]]</li>
+    <li>Sản phẩm đã đặt:</li>
+    <ul>
+        <li th:each="item : ${order.orderDetails}">
+            [[${item.product.productName}]] x [[${item.quantity}]]
+        </li>
+    </ul>
+    <li>Tổng thanh toán: [[${order.totalAmount}]]</li>
+</ul>
+
+<h2>Thông tin giao hàng:</h2>
+<ul>
+    <li>Dự kiến giao hàng: [[${order.shippingDate}]]</li>
+    <li>Mã bưu điện: [Mã bưu điện]</li>
+    <li>Nhà cung cấp dịch vụ vận chuyển: [[${order.shippingMethod}]]</li>
+</ul>
+
+<p>Bạn có thể theo dõi trạng thái đơn hàng của mình tại đây: <a href="[Link theo dõi đơn hàng]">Link theo dõi đơn hàng</a></p>
+
+<h2>Lưu ý:</h2>
+<ul>
+    <li>Nếu bạn có bất kỳ câu hỏi nào về đơn hàng của mình, vui lòng liên hệ với chúng tôi qua [Email] hoặc [Số điện thoại].</li>
+    <li>Chúng tôi rất mong nhận được phản hồi của bạn về trải nghiệm mua sắm tại [Tên cửa hàng].</li>
+</ul>
+
+<p>Trân trọng,</p>
+<p>[[${order.email}]]</p>
+</body>
+</html>
